@@ -2,6 +2,13 @@ import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 
 /**
+ * Component Imports
+ */
+import Header from "../header";
+import Dashboard from "../screens/Dashboard";
+import Sidebar from "../sidebar";
+
+/**
  * Area Imports
  */
 import HeaderArea from "./HeaderArea";
@@ -21,8 +28,15 @@ const Layout: React.FC<LayoutProps> = ({ isAuthed }) => {
   // this layout component
   return (
     <div>
-      <h1>Start of Layout</h1>
-      <h1>End of Layout</h1>
+      <HeaderArea>
+        <Header />
+      </HeaderArea>
+      <SidebarArea>
+        <Sidebar />
+      </SidebarArea>
+      <ScreenArea>
+        <Dashboard />
+      </ScreenArea>
     </div>
   );
 };
