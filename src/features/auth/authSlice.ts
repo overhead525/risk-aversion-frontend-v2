@@ -2,7 +2,6 @@ import { createSlice, PayloadAction, Dispatch } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
 
 import { generateAuthServerInstance } from "../../api/";
-import { AxiosError } from "axios";
 
 interface AuthState {
     authenticated: boolean;
