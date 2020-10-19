@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  login,
-  logout,
   loginOnServer,
   logoutOnServer,
   selectAuthenticated,
 } from "./authSlice";
 import styles from "./auth.module.css";
 import { parseClassName } from "../../helpers/strings";
+import * as lockr from "lockr";
 
 interface AuthFormProps {
   className?: string;
@@ -16,6 +15,9 @@ interface AuthFormProps {
 
 export const AuthForm: React.FC<AuthFormProps> = ({ className }, props) => {
   const authenticatedStatus = useSelector(selectAuthenticated);
+  const { accessToken, refreshToken } = JSON.parse(
+    localStorage.getItem("persist:localRoot")!
+  );
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     username: "",
@@ -50,6 +52,14 @@ export const AuthForm: React.FC<AuthFormProps> = ({ className }, props) => {
 
   return (
     <div {...props} className={className ? parseClassName(className) : ""}>
+      <div>
+        Authenticated:{" "}
+        <span
+          style={{ color: `${authenticatedStatus === false ? "red" : "blue"}` }}
+        >
+          {`${authenticatedStatus}`}
+        </span>
+      </div>
       {authenticatedStatus === true ? (
         <div>
           <button onClick={handleLogoutSubmit}>Logout</button>

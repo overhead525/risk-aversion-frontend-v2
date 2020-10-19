@@ -5,25 +5,34 @@ import { generateAuthServerInstance } from "../../api/";
 
 interface AuthState {
     authenticated: boolean;
+    accessToken: string | null;
+    refreshToken: string | null;
 }
 
 const initialState: AuthState = {
     authenticated: false,
+    accessToken: null,
+    refreshToken: null
+}
+
+interface loginPayloadAction {
+    accessToken?: string;
+    refreshToken?: string;
 }
 
 export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        login: (state) => {
+        login: (state, action: PayloadAction<loginPayloadAction>) => {
             state.authenticated = true;
-            console.log(state.authenticated);
-            console.log("logged in");
+            if (action.payload.accessToken && action.payload.refreshToken) {
+                state.accessToken = action.payload.accessToken;
+                state.refreshToken = action.payload.refreshToken;
+            }
         },
         logout: (state) => {
             state.authenticated = false;
-            console.log(state.authenticated);
-            console.log("logged out");
         }
     }
 })
@@ -45,11 +54,22 @@ export const loginOnServer = (
             password
         });
         if (response.status === 200) {
-            dispatch(login())
+            if (
+                (response.data && response.data.accessToken) &&
+                (response.data && response.data.refreshToken)
+            ) {
+                dispatch(login({
+                    accessToken: response.data.accessToken,
+                    refreshToken: response.data.refreshToken
+                }))
+            } else {
+                dispatch(login({}));
+            }
         } else {
             dispatch(logout());
         }
     } catch (err) {
+        console.error(err);
         dispatch(logout());
     }
 };
@@ -68,6 +88,49 @@ export const logoutOnServer = (
     }
 
     dispatch(logout());
+}
+
+export const checkAuthenticationStatus = (
+    accessToken: string,
+    refreshToken: string
+): AppThunk => async (dispatch: Dispatch) => {
+    const authServerInstance = generateAuthServerInstance({
+        headers: {
+            "Authorization": `Bearer ${accessToken} ${refreshToken}`
+        }
+    });
+
+    try {
+        const response = await authServerInstance.get("/");
+
+        switch (response.status) {
+            case 200:
+                
+                // Access Token expired, but refresh token was good, so new access token provided
+                if (
+                    (response.data && response.data.accessToken) &&
+                    (response.data && response.data.refreshToken)
+                ) {
+                    console.log("new access token granted");
+                    // dispatch(login({}));
+                } 
+                
+                // Access token was still good
+                else {
+                    console.log("access token was still good");
+                    // dispatch(login({}));
+                }
+
+            // Can't authenticate the user
+            default:
+                console.log("server could not authenticate the user");
+                // dispatch(logout());
+        }
+    } catch (err) {
+        // Can't make a request to authenticate the user
+        console.log("can't make a request");
+        // dispatch(logout());
+    }
 }
 
 /**
