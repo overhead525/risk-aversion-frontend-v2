@@ -42,3 +42,42 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Authentication Plans
+
+The following pseudocode outline how we're going to handle authentication.
+
+```javascript
+// Layout Component Checks for Authentication each time it is rendered, redirects to Login Screen if not authenticated
+// We only check authentication on asynchronous requests to the simulator
+
+// Login
+const { accessToken, refreshToken } = reduxThunk.login()  // Send asynchronous request to authentication server, receive encrypted cookies
+
+// Set cookies in users browser (encrypted)
+cookies.set("accessToken", `${accessToken}`, { expires: Date.now() + "900s" })
+localStorage.set("refreshToken", `${refreshToken}`, { expires: Date.now() + "4 hours" })  // could use redux-persist...
+
+// User uses application
+// User does something to trigger simulation api request
+// API request should fail with status code 400, which sets redux state to isAuthenticated = false
+if (simulation.request.status == 400) {
+    // freeze the application
+    application.freeze(() => {
+        render.inMainArea(
+            <div>
+                <h1>Could not authenticate. Please try again. If problem persists, <a path="the same page">refresh</a></h1>
+            </div>
+        )
+    });
+}
+
+// Once we refresh the page, the Layout component should recognize that the user is no longer logged in
+const Layout: React.FC = ({ isAuthenticated }) => {
+    if (isAuthenticated === false) {
+        render(<Redirect to="/">)
+    } else {
+        render(<div>Layout Component</div>)
+    }
+}
+```
