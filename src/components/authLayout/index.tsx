@@ -3,11 +3,9 @@ import { RouteComponentProps } from "react-router-dom";
 
 import { AuthForm } from "../../features/auth/AuthForm";
 
-export interface AuthLayoutProps extends RouteComponentProps {
-  isAuthed: boolean;
-}
+export interface AuthLayoutProps extends RouteComponentProps {}
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({ isAuthed }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = () => {
   return (
     <div>
       <AuthForm />

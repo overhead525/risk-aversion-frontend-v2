@@ -5,17 +5,20 @@ import { generateAuthServerInstance } from "../../api/";
 
 interface AuthState {
     authenticated: boolean;
+    username: string | null;
     accessToken: string | null;
     refreshToken: string | null;
 }
 
 const initialState: AuthState = {
     authenticated: false,
+    username: null,
     accessToken: null,
     refreshToken: null
 }
 
 interface loginPayloadAction {
+    username?: string;
     accessToken?: string;
     refreshToken?: string;
 }
@@ -26,6 +29,9 @@ export const authSlice = createSlice({
     reducers: {
         login: (state, action: PayloadAction<loginPayloadAction>) => {
             state.authenticated = true;
+            if (action.payload.username) {
+                state.username = action.payload.username;
+            }
             if (action.payload.accessToken && action.payload.refreshToken) {
                 state.accessToken = action.payload.accessToken;
                 state.refreshToken = action.payload.refreshToken;
@@ -33,6 +39,8 @@ export const authSlice = createSlice({
         },
         logout: (state) => {
             state.authenticated = false;
+            state.accessToken = null;
+            state.refreshToken = null;
         }
     }
 })
@@ -59,6 +67,7 @@ export const loginOnServer = (
                 (response.data && response.data.refreshToken)
             ) {
                 dispatch(login({
+                    username,
                     accessToken: response.data.accessToken,
                     refreshToken: response.data.refreshToken
                 }))
@@ -112,24 +121,57 @@ export const checkAuthenticationStatus = (
                     (response.data && response.data.refreshToken)
                 ) {
                     console.log("new access token granted");
-                    // dispatch(login({}));
+                    dispatch(login({}));
                 } 
                 
                 // Access token was still good
                 else {
                     console.log("access token was still good");
-                    // dispatch(login({}));
+                    dispatch(login({}));
                 }
+                break
 
             // Can't authenticate the user
             default:
                 console.log("server could not authenticate the user");
-                // dispatch(logout());
+                dispatch(logout());
+                break
         }
     } catch (err) {
         // Can't make a request to authenticate the user
         console.log("can't make a request");
-        // dispatch(logout());
+        dispatch(logout());
+    }
+}
+
+export const register = (
+    username: string,
+    password: string
+): AppThunk => async (dispatch: Dispatch) => {
+    const authServerInstance = generateAuthServerInstance({ headers: {} });
+
+    try {
+        const response = await authServerInstance.post("/register", {
+            username,
+            password
+        })
+        if (response.status === 200) {
+            if (
+                (response.data && response.data.accessToken) &&
+                (response.data && response.data.refreshToken)
+            ) {
+                dispatch(login({
+                    username,
+                    accessToken: response.data.accessToken,
+                    refreshToken: response.data.refreshToken
+                }))
+            }
+        } else {
+            dispatch(logout());
+        }
+    } catch (error) {
+        console.error(error);
+        dispatch(logout());
     }
 }
 
@@ -137,5 +179,6 @@ export const checkAuthenticationStatus = (
  * Selectors
  */
 export const selectAuthenticated = (state: RootState) => state.auth.authenticated;
+export const selectUsername = (state: RootState) => state.auth.username;
 
 export default authSlice.reducer;

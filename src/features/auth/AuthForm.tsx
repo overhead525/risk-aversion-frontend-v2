@@ -7,7 +7,7 @@ import {
 } from "./authSlice";
 import styles from "./auth.module.css";
 import { parseClassName } from "../../helpers/strings";
-import * as lockr from "lockr";
+import { register } from "./authSlice";
 
 interface AuthFormProps {
   className?: string;
@@ -15,10 +15,8 @@ interface AuthFormProps {
 
 export const AuthForm: React.FC<AuthFormProps> = ({ className }, props) => {
   const authenticatedStatus = useSelector(selectAuthenticated);
-  const { accessToken, refreshToken } = JSON.parse(
-    localStorage.getItem("persist:localRoot")!
-  );
   const dispatch = useDispatch();
+
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -48,6 +46,11 @@ export const AuthForm: React.FC<AuthFormProps> = ({ className }, props) => {
   const handleLogoutSubmit = async (e: any) => {
     e.preventDefault();
     await dispatch(logoutOnServer(""));
+  };
+
+  const handleRegisterSubmit = async (e: any) => {
+    e.preventDefault();
+    await dispatch(register(user.username, user.password));
   };
 
   return (
@@ -81,6 +84,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ className }, props) => {
         placeholder="••••••••••••••••"
       />
       <button onClick={handleLoginSubmit}>Login</button>
+      <button onClick={handleRegisterSubmit}>Register</button>
     </div>
   );
 };

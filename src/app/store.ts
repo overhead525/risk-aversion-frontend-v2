@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action, combineReducers, applyMiddleware, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import localStorage from "redux-persist/lib/storage";
 import authReducer from "../features/auth/authSlice";
@@ -6,7 +6,7 @@ import authReducer from "../features/auth/authSlice";
 const authPersistConfig = {
     key: 'localRoot',
     storage: localStorage,
-    whitelist: ["accessToken", "refreshToken"],
+    whitelist: ["authenticated", "username", "accessToken", "refreshToken"],
 }
 
 const rootReducer = combineReducers({
