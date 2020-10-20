@@ -23,6 +23,7 @@ describe("auth reducer", () => {
     it("should be able to log a user OUT (Client Side)", () => {
         const result = auth({
             authenticated: true,
+            username: null,
             accessToken: null,
             refreshToken: null
         }, { type: logout.type }).authenticated;

@@ -20,6 +20,7 @@ import Sidebar from "../sidebar";
 import HeaderArea from "./HeaderArea";
 import ScreenArea from "./ScreenArea";
 import SidebarArea from "./SidebarArea";
+import SimForm from "../../features/sim/SimForm";
 
 export interface LayoutProps extends RouteComponentProps {}
 
@@ -30,7 +31,7 @@ const Layout: React.FC<LayoutProps> = () => {
 
   useEffect((): void => {
     const { accessToken, refreshToken } = JSON.parse(
-      localStorage.getItem("persist:localRoot")!
+      localStorage.getItem("persist:authRoot")!
     );
     if (accessToken && refreshToken) {
       dispatch(
@@ -54,7 +55,7 @@ const Layout: React.FC<LayoutProps> = () => {
         <Sidebar />
       </SidebarArea>
       <ScreenArea>
-        <Dashboard />
+        <SimForm />
       </ScreenArea>
     </div>
   ) : (

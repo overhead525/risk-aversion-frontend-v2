@@ -1,23 +1,38 @@
 import Axios, { AxiosInstance } from "axios";
 import * as secrets from "../secrets";
 
-interface AuthServerOptions {
+interface ServerOptions {
+  headers: {
+    [key: string]: string;
+  };
+}
+
+export const generateAuthServerInstance = (
+  options: ServerOptions
+): AxiosInstance => {
+  const { headers = {} } = options;
+
+  return Axios.create({
+    baseURL: `${secrets.AUTH_SERVER_URL}`,
+    timeout: 1500,
     headers: {
-        [key: string]: string;
-    }
-}
+      "Content-Type": "application/json",
+      ...headers,
+    },
+  });
+};
 
-export const generateAuthServerInstance = (options: AuthServerOptions): AxiosInstance => {
-    const {
-        headers = {}
-    } = options;
+export const generateSimulationServerInstance = (
+  options: ServerOptions
+): AxiosInstance => {
+  const { headers = {} } = options;
 
-    return Axios.create({
-        baseURL: `${secrets.AUTH_SERVER_URL}`,
-        timeout: 1500,
-        headers: {
-            "Content-Type": "application/json",
-            ...headers,
-        }
-    });
-}
+  return Axios.create({
+    baseURL: `${secrets.SIM_SERVER_URL}`,
+    timeout: 10000,
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
+  });
+};
