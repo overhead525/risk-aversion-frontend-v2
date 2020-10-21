@@ -45,17 +45,19 @@ const Layout: React.FC<LayoutProps> = () => {
 
   return authenticatedStatus === true ? (
     <div>
+      {/*
       <p>
         Logged in as <span style={{ color: "blue" }}>{`${username}`}</span>
       </p>
+      */}
       <HeaderArea>
-        <Header />
+        <div>Header</div>
       </HeaderArea>
       <SidebarArea>
-        <Sidebar />
+        <div>Sidebar</div>
       </SidebarArea>
       <ScreenArea>
-        <SimForm />
+        <div>Screen</div>
       </ScreenArea>
     </div>
   ) : (

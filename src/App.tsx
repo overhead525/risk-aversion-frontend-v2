@@ -37,17 +37,6 @@ function App() {
       <PersistGate loading={<Loader />} persistor={persistor}>
         <Router>
           <div className="App">
-            <h1>Protected React Router</h1>
-            <br />
-            <button onClick={handleVisitApp}>Go to App</button>
-            <br />
-            <button onClick={handleVisitAuthentication}>
-              Go to Authentication
-            </button>
-            <br />
-            <button onClick={handleVisitHome}>Go Home</button>
-            <br />
-            <br />
             {redirect}
             <Route exact path="/">
               <h4>Home Page</h4>
