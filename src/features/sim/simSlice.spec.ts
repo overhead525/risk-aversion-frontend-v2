@@ -3,6 +3,9 @@ import sim, {
   SimConfigObject,
   SimResultObject,
   initialState as pureInitialState,
+  SimState,
+  initialState,
+  resetStateProp,
 } from "./simSlice";
 
 const sampleSimulationConfig: SimConfigObject = {
@@ -33,6 +36,7 @@ describe("sim reducer", () => {
       simName: null,
       configurations: [],
       config: null,
+      simResult: null,
       simulations: [],
     };
     expect(result).toStrictEqual(expected);
@@ -131,5 +135,55 @@ describe("sim reducer", () => {
     };
     const result = sim(initialState, sampleAction);
     expect(result.simulations.includes(sampleAction.payload.simulations[0]));
+  });
+
+  it("should reset individual state properties", () => {
+    const intialState: SimState = {
+      executed: true,
+      simName: "Redenbaucher",
+      config: {
+        principal: 40039.0,
+        numOfTrades: 34,
+        numOfSimulations: 12456,
+      },
+      simResult: {
+        simName: "Working Name",
+        simID: "38sj-3883-djks-289njs8",
+        maxPortfolio: 78392.34,
+        minPortfolio: 38293.23,
+      },
+      configurations: [
+        {
+          principal: 20000,
+          riskDecimal: 0.03,
+          rewardDecimal: 0.09,
+          winDecimal: 0.75,
+          lossDecimal: 0.25,
+          breakEvenDecimal: 0.1,
+          numOfTrades: 35,
+          numOfSimulations: 6789,
+        },
+      ],
+      simulations: [
+        {
+          simName: "Lessons Learned",
+          simID: "e5aa4664-3b07-41d0-937f-a6bca9017469",
+          maxPortfolio: 295012.85,
+          minPortfolio: 92274.47,
+        },
+      ],
+    };
+    const sampleAction = {
+      type: resetStateProp.type,
+      payload: {
+        execute: true,
+        simName: true,
+        config: true,
+        simResult: true,
+        configurations: true,
+        simulations: true,
+      },
+    };
+    expect(sim(initialState, sampleAction)).toEqual(pureInitialState);
   });
 });

@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { createSlice, PayloadAction, Dispatch } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
 
@@ -25,10 +26,11 @@ export interface SimResultObject {
   minPortfolio: number;
 }
 
-interface SimState {
+export interface SimState {
   executed: boolean | null;
   simName: string | null;
   config: SimConfigObject | null;
+  simResult: SimResultObject | null;
   configurations: SimConfigObject[];
   simulations: SimResultObject[];
 }
@@ -37,6 +39,7 @@ export const initialState: SimState = {
   executed: null,
   simName: null,
   config: null,
+  simResult: null,
   configurations: [],
   simulations: [],
 };
@@ -45,8 +48,18 @@ interface setSimulationActionPayload {
   executed?: boolean;
   simName?: string;
   config?: SimConfigObject;
+  simResult?: SimResultObject;
   configurations?: SimConfigObject[];
   simulations?: SimResultObject[];
+}
+
+interface resetStatePropActionPayload {
+  executed: boolean;
+  simName: boolean;
+  config: boolean;
+  simResult: boolean;
+  configurations: boolean;
+  simulations: boolean;
 }
 
 export const simSlice = createSlice({
@@ -72,6 +85,13 @@ export const simSlice = createSlice({
           ...action.payload.config,
         };
       }
+      if (action.payload.simResult) {
+        // Update individual properties if you like
+        state.simResult = {
+          ...state.simResult,
+          ...action.payload.simResult,
+        };
+      }
       if (action.payload.configurations) {
         // Update configurations array
         state.configurations = action.payload.configurations;
@@ -81,10 +101,21 @@ export const simSlice = createSlice({
         state.simulations = action.payload.simulations;
       }
     },
+    resetStateProp: (
+      state,
+      action: PayloadAction<resetStatePropActionPayload>
+    ) => {
+      if (action.payload.executed === true) state.executed = null;
+      if (action.payload.simName === true) state.simName = null;
+      if (action.payload.config === true) state.config = null;
+      if (action.payload.simResult === true) state.config = null;
+      if (action.payload.configurations === true) state.configurations = [];
+      if (action.payload.simulations === true) state.simulations = [];
+    },
   },
 });
 
-export const { setSimulation } = simSlice.actions;
+export const { setSimulation, resetStateProp } = simSlice.actions;
 
 /**
  * Async Thunks
@@ -127,11 +158,11 @@ export const getMySimulations = (accessToken: string): AppThunk => async (
         }
         break;
       default:
-        console.log("something went wrong with requst to get sims...");
+        dispatch(setSimulation({ executed: false }));
         break;
     }
   } catch (error) {
-    console.error(error);
+    dispatch(setSimulation({ executed: false }));
   }
 };
 
@@ -179,6 +210,52 @@ export const getMyConfigurations = (accessToken: string): AppThunk => async (
     }
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const initiateSimulation = (
+  accessToken: string,
+  simName: string,
+  params: SimConfigObject
+): AppThunk => async (dispatch: Dispatch) => {
+  const simServerInstance = generateSimulationServerInstance({
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const parsedSimName = _.camelCase(simName);
+
+  try {
+    const response = await simServerInstance.post("/init", {
+      simName: parsedSimName,
+      params,
+    });
+
+    switch (response.status) {
+      case 200:
+        const result: {
+          simID: string;
+          maxPortfolio: number;
+          minPortfolio: number;
+        } = response.data.simulate.result;
+        console.log(result);
+        const resultToBeStored: SimResultObject = {
+          simName: parsedSimName,
+          simID: result.simID,
+          maxPortfolio: result.maxPortfolio,
+          minPortfolio: result.minPortfolio,
+        };
+        dispatch(
+          setSimulation({
+            simName: parsedSimName,
+            config: params,
+            simResult: resultToBeStored,
+          })
+        );
+        break;
+    }
+  } catch (error) {
+    return;
   }
 };
 

@@ -19,7 +19,13 @@ const authPersistConfig = {
 const simPersistConfig = {
   key: "simRoot",
   storage: sessionStorage,
-  whitelist: ["simName", "config", "configurations", "simulations"],
+  whitelist: [
+    "simName",
+    "config",
+    "simResult",
+    "configurations",
+    "simulations",
+  ],
 };
 
 const rootReducer = combineReducers({
