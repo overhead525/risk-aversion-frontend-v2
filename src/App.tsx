@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import "carbon-components/css/carbon-components.min.css";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -13,7 +13,7 @@ import { PersistGate } from "redux-persist/integration/react";
 /**
  * Layout Import
  */
-import Layout from "./components/layout";
+import { PrimaryLayout } from "./stories/Layout.stories";
 import AuthLayout from "./components/authLayout";
 import Loader from "./components/loader";
 
@@ -49,7 +49,7 @@ function App() {
             <Route
               exact
               path="/app"
-              render={(props) => <Layout {...props} />}
+              render={(props) => <PrimaryLayout {...props} />}
             />
           </div>
         </Router>
