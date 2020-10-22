@@ -1,0 +1,54 @@
+@import "@carbon/colors/scss/colors";
+
+.bx--side-nav {
+  border-right: 2px solid #c9c9c9;
+}
+
+.ra_mb_small {
+  margin-bottom: 1rem;
+}
+
+.ra_mb_medium {
+  margin-bottom: 2.5rem;
+}
+
+.graph-box {
+  text-align: center;
+
+  p {
+    font-size: 0.75rem;
+  }
+}
+
+.current-portfolio {
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  &__value {
+    color: $carbon--blue-40;
+  }
+}
+
+.goal-portfolio {
+  &__label {
+  }
+  &__value {
+    color: $carbon--green-40;
+  }
+}
+
+/*
+@keyframes grow {
+  from {
+  }
+  to {
+    .label {
+      font-size-adjust: 1.5rem;
+    }
+    .value {
+      font-size-adjust: 1.25;
+    }
+  }
+}
+*/

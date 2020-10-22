@@ -43,11 +43,7 @@ export const Layout: React.FC<LayoutProps> = () => {
             </HeaderName>
             <BreadcrumbLinks />
             <HeaderBarActions />
-            <SideNavArea>
-              <div>First Line</div>
-              <br />
-              <div>Second Line</div>
-            </SideNavArea>
+            <SideNavArea />
           </Header>
           <ScreenArea useResponsiveOffset={true} />
         </>
