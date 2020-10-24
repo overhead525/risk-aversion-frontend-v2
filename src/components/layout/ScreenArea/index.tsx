@@ -14,7 +14,7 @@ export const ScreenArea: React.FC<ScreenAreaProps> = ({
   const content = (
     <div className="bx--grid">
       <div className="bx--row">
-        <div className="main-offset bx--col-lg-9">
+        <div className="main-offset bx--col-lg-10">
           <Dashboard />
         </div>
       </div>

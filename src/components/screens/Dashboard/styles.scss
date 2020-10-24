@@ -7,14 +7,34 @@
   margin-bottom: 2rem;
 }
 
-@media only screen and (min-width: 1178px) {
+@media only screen and (min-width: 672px) {
   .username-hero {
-    font-size: 3.375rem;
+    font-size: 2.2rem;
   }
 }
 
-@media only screen and (max-width: 1178px) {
+@media only screen and (min-width: 804px) {
+  .username-hero {
+    font-size: 2.75rem;
+  }
+}
+
+@media only screen and (min-width: 1178px) {
   .username-hero {
     font-size: 3rem;
+  }
+}
+
+.chart-wrapper {
+  @media only screen and (min-width: 672px) {
+    height: 12rem;
+  }
+
+  @media only screen and (min-width: 804px) {
+    height: 15rem;
+  }
+
+  @media only screen and (min-width: 1178px) {
+    height: 18rem;
   }
 }

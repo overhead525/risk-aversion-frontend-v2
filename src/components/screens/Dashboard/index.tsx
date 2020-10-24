@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-
+import { TradingProfileChart } from "./TradingProfileChart";
+import { ExecutionButtons } from "./ExecutionButtons";
 import "./styles.scss";
+import { SimulationsTable } from "./SimulationsTable";
 
 interface DashboardProps {}
 
@@ -16,13 +18,18 @@ const Dashboard: React.FC<DashboardProps> = () => {
         <div className="bx--col-md-5 scaffold" id="data">
           <p>Dashboard</p>
           <h1 className="username-hero">{user.name}</h1>
+          <ExecutionButtons />
         </div>
         <div className="bx--col-md-3 scaffold" id="simulations-table">
-          2 of 2
+          <div className="chart-wrapper">
+            <TradingProfileChart />
+          </div>
         </div>
       </div>
       <div className="bx--row">
-        <div className="bx--col scaffold">{"<Table Goes Here>"}</div>
+        <div className="bx--col scaffold">
+          <SimulationsTable />
+        </div>
       </div>
     </div>
   );
