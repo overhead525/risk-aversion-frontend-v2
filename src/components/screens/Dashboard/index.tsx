@@ -15,19 +15,19 @@ const Dashboard: React.FC<DashboardProps> = () => {
   return (
     <div className="bx--grid">
       <div className="bx--row mb__standard">
-        <div className="bx--col-md-5 scaffold" id="data">
+        <div className="bx--col-md-5" id="data">
           <p>Dashboard</p>
           <h1 className="username-hero">{user.name}</h1>
           <ExecutionButtons />
         </div>
-        <div className="bx--col-md-3 scaffold" id="simulations-table">
+        <div className="bx--col-md-3" id="simulations-table">
           <div className="chart-wrapper">
             <TradingProfileChart />
           </div>
         </div>
       </div>
       <div className="bx--row">
-        <div className="bx--col scaffold">
+        <div className="bx--col">
           <SimulationsTable />
         </div>
       </div>
