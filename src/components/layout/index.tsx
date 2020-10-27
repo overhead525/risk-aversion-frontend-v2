@@ -21,6 +21,7 @@ import HeaderArea from "./HeaderArea";
 import ScreenArea from "./ScreenArea";
 import SidebarArea from "./SidebarArea";
 import SimForm from "../../features/sim/SimForm";
+import ResourceForm from "../../features/resource/ResourceForm";
 
 export interface LayoutProps extends RouteComponentProps {}
 
@@ -56,6 +57,7 @@ const Layout: React.FC<LayoutProps> = () => {
       </SidebarArea>
       <ScreenArea>
         <SimForm />
+        <ResourceForm />
       </ScreenArea>
     </div>
   ) : (

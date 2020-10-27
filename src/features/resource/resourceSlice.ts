@@ -3,15 +3,32 @@ import { AppThunk, RootState } from "../../app/store";
 
 import { generateResourceServerInstance } from "../../api";
 
-export interface ResourceState {}
+export interface ResourceState {
+  images: [{ simID: string; data: string }] | null;
+}
 
-export const initialState: ResourceState = {};
+export const initialState: ResourceState = {
+  images: null,
+};
+
+interface SetImagesPayload {
+  images: [{ simID: string; data: string; contentType: string }];
+}
 
 export const resourceSlice = createSlice({
   name: "resource",
   initialState,
-  reducers: {},
+  reducers: {
+    setImages: (state, action: PayloadAction<SetImagesPayload>) => {
+      if (action.payload.images) {
+        state.images = action.payload.images;
+      }
+      console.log(state);
+    },
+  },
 });
+
+export const { setImages } = resourceSlice.actions;
 
 export const retrieveSimulationImage = (
   accessToken: string,
@@ -25,8 +42,26 @@ export const retrieveSimulationImage = (
 
   try {
     const response = await resourceServerInstance.get(`/image/${simID}`);
-    console.log(response);
+    const rawImageData: {
+      img: {
+        data: string;
+        contentType: string;
+      };
+    } = response.data;
+    dispatch(
+      setImages({
+        images: [
+          {
+            simID,
+            data: rawImageData.img.data,
+            contentType: rawImageData.img.contentType,
+          },
+        ],
+      })
+    );
   } catch (error) {
     console.error("Could not request the image");
   }
 };
+
+export default resourceSlice.reducer;

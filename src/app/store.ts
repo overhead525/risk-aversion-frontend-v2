@@ -5,10 +5,12 @@ import {
   combineReducers,
 } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
+import * as localForage from "localforage";
 import localStorage from "redux-persist/lib/storage";
 import sessionStorage from "redux-persist/lib/storage/session";
 import authReducer from "../features/auth/authSlice";
 import simReducer from "../features/sim/simSlice";
+import resourceReducer from "../features/resource/resourceSlice";
 
 const authPersistConfig = {
   key: "authRoot",
@@ -28,9 +30,15 @@ const simPersistConfig = {
   ],
 };
 
+const resourcePersistConfig = {
+  key: "resourceForage",
+  storage: localForage,
+};
+
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   sim: persistReducer(simPersistConfig, simReducer),
+  resource: persistReducer(resourcePersistConfig, resourceReducer),
 });
 
 export const store = configureStore({
