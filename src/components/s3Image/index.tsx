@@ -37,7 +37,6 @@ export const S3Image: React.FC<S3ImageProps> = ({
     await s3.getObject({ Key, Bucket }, (err, data) => {
       if (err) return setImage(errorPlaceholder);
       const imgUInt8 = data.Body;
-      console.log("got a response");
       return setImage(
         <img
           width={width}

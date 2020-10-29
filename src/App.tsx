@@ -9,9 +9,9 @@ import {
 import { Provider } from "react-redux";
 import { persistor, store } from "./app/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { getObject, listObjects } from "./api/image";
 import AWS from "aws-sdk";
 import { bytesToBase64 } from "byte-base64";
+import { S3Image } from "./components/s3Image";
 
 /**
  * Layout Import
@@ -23,6 +23,7 @@ import Loader from "./components/loader";
 function App() {
   const [redirect, setRedirect] = useState(<></>);
   const [someImage, setSomeImage] = useState(<img />);
+  const [someVideo, setSomeVideo] = useState(<video />);
 
   const handleVisitApp = () => {
     setRedirect(<Redirect to="/app" />);
@@ -34,6 +35,12 @@ function App() {
 
   const handleVisitHome = () => {
     setRedirect(<Redirect to="/" />);
+  };
+
+  const constructS3ObjectLink = (key: string, bucketName: string) => {
+    // @ts-ignore
+    const parsedKey = key.replaceAll(" ", "+");
+    return `https://${bucketName}.s3.amazonaws.com/${key}`;
   };
 
   const handleS3Test = async () => {
@@ -56,8 +63,12 @@ function App() {
       { Key: "me-in-the-woods.jpg", Bucket: "simulation-images" },
       (err, data) => {
         if (err) return console.log("Error finding image");
-        const decoder = new TextDecoder("utf-8");
         const imgUInt8 = data.Body;
+        const videoParams = {
+          Key:
+            "Ichimoku Day Trading Strategy _ Cloud Trading Explained (For Beginners).mp4",
+          Bucket: "simulation-images",
+        };
         setSomeImage(
           <img
             src={`data:image/png;base64, ${
@@ -65,6 +76,17 @@ function App() {
               bytesToBase64(imgUInt8)
             }`}
           />
+        );
+        setSomeVideo(
+          <video controls width="690" height="360">
+            <source
+              type="video/mp4"
+              src={`${constructS3ObjectLink(
+                videoParams.Key,
+                videoParams.Bucket
+              )}`}
+            />
+          </video>
         );
       }
     );
@@ -78,6 +100,15 @@ function App() {
             <h1>Protected React Router</h1>
             <br />
             {someImage}
+            <br />
+            {someVideo}
+            <br />
+            <S3Image
+              width={50}
+              height={100}
+              Key="me-in-the-woods.jpg"
+              Bucket="simulation-images"
+            />
             <br />
             <button onClick={handleS3Test}>Get S3</button>
             <br />
