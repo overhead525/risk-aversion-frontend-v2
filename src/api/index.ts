@@ -36,3 +36,18 @@ export const generateSimulationServerInstance = (
     },
   });
 };
+
+export const generateImageServerInstance = (
+  options: ServerOptions
+): AxiosInstance => {
+  const { headers = {} } = options;
+
+  return Axios.create({
+    baseURL: `${secrets.IMAGE_SERVER_URL}`,
+    timeout: 10000,
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
+  });
+};
