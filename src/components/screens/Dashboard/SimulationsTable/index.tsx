@@ -196,7 +196,7 @@ export const SimulationsTable: React.FC = (props) => {
       }) => (
         <TableContainer
           title="Simulations"
-          description="A dynamic view of all of your simulations created in Risk Aversion. Click on a row for a detailed view."
+          description="A dynamic view of all of your simulations created in Risk Aversion. Click on the row dropdown for a more detailed view."
           {...getTableContainerProps()}
         >
           <TableToolbar {...getToolbarProps()}>
