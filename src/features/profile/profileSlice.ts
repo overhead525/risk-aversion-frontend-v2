@@ -100,13 +100,15 @@ export const getUserProfile = (
         }
         break;
       default:
-        console.log("Could not retrieve trading profile for some reason...");
+        console.error("Could not retrieve trading profile for some reason...");
         break;
     }
   } catch (error) {
-    console.log("Error", error);
+    console.error("Error", error);
   }
 };
+
+export const postUserProfile = (accessToken: string, username: string) => {};
 
 /**
  * Selectors
