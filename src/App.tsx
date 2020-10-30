@@ -21,20 +21,6 @@ import Loader from "./components/loader";
 
 function App() {
   const [redirect, setRedirect] = useState(<></>);
-  const [someImage, setSomeImage] = useState(<img />);
-  const [someVideo, setSomeVideo] = useState(<video />);
-
-  const handleVisitApp = () => {
-    setRedirect(<Redirect to="/app" />);
-  };
-
-  const handleVisitAuthentication = () => {
-    setRedirect(<Redirect to="/auth" />);
-  };
-
-  const handleVisitHome = () => {
-    setRedirect(<Redirect to="/" />);
-  };
 
   return (
     <Provider store={store}>
