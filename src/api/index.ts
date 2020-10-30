@@ -51,3 +51,18 @@ export const generateImageServerInstance = (
     },
   });
 };
+
+export const generateProfileServerInstance = (
+  options: ServerOptions
+): AxiosInstance => {
+  const { headers = {} } = options;
+
+  return Axios.create({
+    baseURL: `${secrets.PROFILE_SERVER_URL}`,
+    timeout: 10000,
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
+  });
+};
