@@ -7,8 +7,10 @@ import {
 import { persistStore, persistReducer } from "redux-persist";
 import localStorage from "redux-persist/lib/storage";
 import sessionStorage from "redux-persist/lib/storage/session";
+import localForage from "localforage";
 import authReducer from "../features/auth/authSlice";
 import simReducer from "../features/sim/simSlice";
+import profileReducer from "../features/profile/profileSlice";
 
 const authPersistConfig = {
   key: "authRoot",
@@ -28,9 +30,15 @@ const simPersistConfig = {
   ],
 };
 
+const profilePersistConfig = {
+  key: "profileRoot",
+  storage: localForage,
+};
+
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   sim: persistReducer(simPersistConfig, simReducer),
+  profile: persistReducer(profilePersistConfig, profileReducer),
 });
 
 export const store = configureStore({

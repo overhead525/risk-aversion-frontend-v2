@@ -26,7 +26,7 @@ export const initialState: ProfileState = {
   goalPortfolio: null,
 };
 
-interface SetProfileActionPayload {
+export interface SetProfileActionPayload {
   firstName?: string;
   lastName?: string;
   tradingHabits?: {
@@ -107,3 +107,21 @@ export const getUserProfile = (
     console.log("Error", error);
   }
 };
+
+/**
+ * Selectors
+ */
+export const selectEntireProfile = (state: RootState) => state.profile;
+export const selectProfileProperty = (
+  state: RootState,
+  propertiesArr: string[]
+) => {
+  const currentState = Object.create(state.profile);
+  const profileProperties = Object.create(null);
+  propertiesArr.forEach((property) => {
+    profileProperties[property] = currentState[property];
+  });
+  return profileProperties;
+};
+
+export default profileSlice.reducer;
