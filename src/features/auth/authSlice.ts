@@ -190,5 +190,7 @@ export const register = (
 export const selectAuthenticated = (state: RootState) =>
   state.auth.authenticated;
 export const selectUsername = (state: RootState) => state.auth.username;
+export const selectAccessToken = (state: RootState) => state.auth.accessToken;
+export const selectRefreshToken = (state: RootState) => state.auth.refreshToken;
 
 export default authSlice.reducer;
