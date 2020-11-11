@@ -5,6 +5,7 @@ import {
   Redirect,
   Route,
   Switch,
+  Link,
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import { persistor, store } from "./app/store";
@@ -30,6 +31,7 @@ function App() {
             {redirect}
             <Route exact path="/">
               <h4>Home Page</h4>
+              <Link to="/app">Go to App</Link>
             </Route>
             <Route
               exact
