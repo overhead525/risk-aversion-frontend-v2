@@ -45,7 +45,7 @@ describe("test my helpers for trading profile chart", () => {
         score: 65,
       },
     ];
-    expect(composeRadarData(convertedProfile)).toEqual(expected);
+    expect(composeRadarData(convertedProfile, "Market")).toEqual(expected);
   });
 
   test("parseStringAsTitle works correctly", () => {

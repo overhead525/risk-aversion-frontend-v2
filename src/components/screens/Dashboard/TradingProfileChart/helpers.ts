@@ -1,8 +1,8 @@
 export interface profileInterface {
-  risk: number;
-  reward: number;
-  winPercentage: number;
-  lossPercentage: number;
+  risk: number | null;
+  reward: number | null;
+  winPercentage: number | null;
+  lossPercentage: number | null;
 }
 
 export const marketProfile = {
@@ -14,10 +14,14 @@ export const marketProfile = {
 
 export function convertRawProfile(rawProfile: profileInterface) {
   return {
-    risk: rawProfile.risk * 100,
-    reward: rawProfile.reward * 100,
-    winPercentage: rawProfile.winPercentage * 100,
-    lossPercentage: rawProfile.lossPercentage * 100,
+    risk: rawProfile.risk ? rawProfile.risk * 100 : null,
+    reward: rawProfile.reward ? rawProfile.reward * 100 : null,
+    winPercentage: rawProfile.winPercentage
+      ? rawProfile.winPercentage * 100
+      : null,
+    lossPercentage: rawProfile.lossPercentage
+      ? rawProfile.lossPercentage * 100
+      : null,
   } as profileInterface;
 }
 
@@ -43,10 +47,13 @@ export function parseStringAsTitle(s: string) {
   return rec(newString, 0, newString.length);
 }
 
-export function composeRadarData(convertedProfile: profileInterface) {
+export function composeRadarData(
+  convertedProfile: profileInterface,
+  target: string
+) {
   const data: any[] = [];
   Object.entries(convertedProfile).forEach((pair, index) => {
-    data.push({ attribute: parseStringAsTitle(pair[0]), trader: "Market" });
+    data.push({ attribute: parseStringAsTitle(pair[0]), trader: target });
     data[index] = { ...data[index], score: pair[1] };
   });
   return data;
