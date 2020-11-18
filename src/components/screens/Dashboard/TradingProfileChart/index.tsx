@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getUserProfile,
+  selectEntireProfile,
+} from "../../../../features/profile/profileSlice";
 // @ts-ignore
 import { RadarChart } from "@carbon/charts-react";
 
 export const TradingProfileChart: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const profile = useSelector(selectEntireProfile);
+  console.log("Profile", profile);
+
+  const getUserProfileWrapper = async () => {
+    const accessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTG1hbGNvbG1SIiwiaWF0IjoxNjAzNjk2NzI1fQ.h5nXMrUYJyWaEP0wkVoxzx3HfM9deYcZHuAgTEL1AkQ";
+    const username = "LmalcolmR";
+    await dispatch(getUserProfile(accessToken, username));
+  };
+
+  useEffect(() => {
+    getUserProfileWrapper();
+  }, []);
+
   const data = [
     {
       trader: "User",
@@ -37,7 +58,7 @@ export const TradingProfileChart: React.FC = () => {
     {
       trader: "Market",
       attribute: "Win Percentage",
-      score: 76,
+      score: 30,
     },
     {
       trader: "Market",
