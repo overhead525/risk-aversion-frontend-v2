@@ -24,9 +24,15 @@ const Fade16 = () => (
   </svg>
 );
 
-export interface LayoutProps {}
+export enum WhichScreen {
+  "DASHBOARD",
+  "SETUP",
+}
+export interface LayoutProps {
+  is: WhichScreen;
+}
 
-export const Layout: React.FC<LayoutProps> = () => {
+export const Layout: React.FC<LayoutProps> = ({ is }) => {
   return (
     <HeaderContainer
       render={({ isSideNavExpanded, onClickSideNavExpand }) => (
@@ -45,7 +51,7 @@ export const Layout: React.FC<LayoutProps> = () => {
             <HeaderBarActions />
             <SideNavArea />
           </Header>
-          <ScreenArea useResponsiveOffset={true} />
+          <ScreenArea is={is} useResponsiveOffset={true} />
         </>
       )}
     />

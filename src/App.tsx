@@ -19,6 +19,7 @@ import "./ra_App.scss";
 import { PrimaryLayout } from "./stories/Layout.stories";
 import AuthLayout from "./components/authLayout";
 import Loader from "./components/loader";
+import { WhichScreen } from "./components/layout";
 
 function App() {
   const [redirect, setRedirect] = useState(<></>);
@@ -41,7 +42,16 @@ function App() {
             <Route
               exact
               path="/app"
-              render={(props) => <PrimaryLayout {...props} />}
+              render={(props) => (
+                <PrimaryLayout {...props} is={WhichScreen.DASHBOARD} />
+              )}
+            />
+            <Route
+              exact
+              path="/app/sim-setup"
+              render={(props) => (
+                <PrimaryLayout {...props} is={WhichScreen.SETUP} />
+              )}
             />
           </div>
         </Router>

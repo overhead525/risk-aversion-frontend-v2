@@ -1,7 +1,7 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react/types-6-0";
 
-import { Layout, LayoutProps } from "../components/layout";
+import { Layout, LayoutProps, WhichScreen } from "../components/layout";
 
 export default {
   title: "Example/Button",
@@ -11,4 +11,6 @@ export default {
 const Template: Story<LayoutProps> = (args) => <Layout {...args} />;
 
 export const PrimaryLayout = Template.bind({});
-PrimaryLayout.args = {};
+PrimaryLayout.args = {
+  is: WhichScreen.DASHBOARD,
+};
