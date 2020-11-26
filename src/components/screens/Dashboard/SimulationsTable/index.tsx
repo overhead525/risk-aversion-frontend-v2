@@ -29,7 +29,8 @@ import {
   Download16 as Download,
 } from "@carbon/icons-react";
 import { action } from "@storybook/addon-actions";
-import {} from "carbon-components-react";
+import { useSelector } from "react-redux";
+import { selectConfigurations } from "../../../../features/sim/simSlice";
 
 const insertInRandomPosition = (array: Array<any>, element: any) => {
   const index = Math.floor(Math.random() * (array.length + 1));
@@ -88,7 +89,7 @@ const rows = [
     principal: "$11,000.00",
     maxPortfolio: "$128,756.23",
     minPortfolio: "$10,728.44",
-    numTrades: "54",
+    numTrades: "87",
   },
   {
     id: "simulation-4",
@@ -111,6 +112,9 @@ const rows = [
 ];
 
 export const SimulationsTable: React.FC = (props) => {
+  const configurations = useSelector(selectConfigurations);
+  console.log(configurations);
+
   const [tableState, setTableState] = useState({
     rows,
     headers,
@@ -167,6 +171,8 @@ export const SimulationsTable: React.FC = (props) => {
     };
   };
 
+  console.log(tableState);
+
   return (
     <DataTable rows={tableState.rows} headers={tableState.headers} {...props}>
       {({
@@ -208,31 +214,9 @@ export const SimulationsTable: React.FC = (props) => {
               >
                 Delete
               </TableBatchAction>
-              <TableBatchAction
-                renderIcon={Save}
-                iconDescription="Save the selected rows"
-                // onClick={batchActionClick(selectedRows)}
-              >
-                Save
-              </TableBatchAction>
-              <TableBatchAction
-                renderIcon={Download}
-                iconDescription="Download the selected rows"
-                // onClick={batchActionClick(selectedRows)}
-              >
-                Download
-              </TableBatchAction>
             </TableBatchActions>
             <TableToolbarContent>
               <TableToolbarSearch onChange={onInputChange} />
-              <TableToolbarMenu>
-                <TableToolbarAction primaryFocus onClick={handleOnRowAdd}>
-                  Add row
-                </TableToolbarAction>
-                <TableToolbarAction onClick={handleOnHeaderAdd}>
-                  Add header
-                </TableToolbarAction>
-              </TableToolbarMenu>
             </TableToolbarContent>
           </TableToolbar>
           <Table {...getTableProps()}>

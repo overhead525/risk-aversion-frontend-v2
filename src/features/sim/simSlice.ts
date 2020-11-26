@@ -263,5 +263,8 @@ export const initiateSimulation = (
  * Selectors
  */
 export const selectExecuted = (state: RootState) => state.sim.executed;
+export const selectSimulations = (state: RootState) => state.sim.simulations;
+export const selectConfigurations = (state: RootState) =>
+  state.sim.configurations;
 
 export default simSlice.reducer;

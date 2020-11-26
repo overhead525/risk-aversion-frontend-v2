@@ -1,49 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectEntireProfile } from "../../../../features/profile/profileSlice";
+import { convertRawProfile, composeRadarData, marketProfile } from "./helpers";
 // @ts-ignore
 import { RadarChart } from "@carbon/charts-react";
 
 export const TradingProfileChart: React.FC = () => {
+  const profile = useSelector(selectEntireProfile);
+
+  console.log("Profile", profile);
+
   const data = [
-    {
-      trader: "User",
-      attribute: "Risk",
-      score: 25,
-    },
-    {
-      trader: "User",
-      attribute: "Reward",
-      score: 46,
-    },
-    {
-      trader: "User",
-      attribute: "Win Percentage",
-      score: 55,
-    },
-    {
-      trader: "User",
-      attribute: "Loss Percentage",
-      score: 27,
-    },
-    {
-      trader: "Market",
-      attribute: "Risk",
-      score: 12,
-    },
-    {
-      trader: "Market",
-      attribute: "Reward",
-      score: 38,
-    },
-    {
-      trader: "Market",
-      attribute: "Win Percentage",
-      score: 76,
-    },
-    {
-      trader: "Market",
-      attribute: "Loss Percentage",
-      score: 24,
-    },
+    ...composeRadarData(convertRawProfile(profile.tradingHabits), "User"),
+    ...composeRadarData(convertRawProfile(marketProfile), "Market"),
   ];
 
   const options = {
