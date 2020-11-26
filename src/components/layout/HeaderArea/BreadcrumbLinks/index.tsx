@@ -64,9 +64,17 @@ export const BreadcrumbLinks: React.FC = () => {
 
     const pivot = findPivot();
 
-    return breadcrumbItems.slice(0, pivot + 1).map(({ component }) => {
-      return component;
-    });
+    return breadcrumbItems
+      .slice(0, pivot + 1)
+      .map(({ component, urlMatch }) => {
+        const processedComponent =
+          urlMatch! === removeHashtag(history.location.pathname) ? (
+            <div className="component-wrapper last">{component}</div>
+          ) : (
+            <div className="component-wrapper">{component}</div>
+          );
+        return processedComponent;
+      });
   };
 
   return (

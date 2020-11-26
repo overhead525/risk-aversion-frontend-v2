@@ -1,7 +1,4 @@
 .link-area {
-  display: flex;
-  align-items: center;
-
   a {
     padding: 0 0.2rem;
   }
@@ -10,5 +7,23 @@
 .breadcrumb-item {
   &::after {
     color: #ffffff;
+    content: "";
+  }
+}
+
+.component-wrapper {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+
+  &.last {
+    &::after {
+      content: "";
+    }
+  }
+
+  &::after {
+    color: #fff;
+    content: "/";
   }
 }
