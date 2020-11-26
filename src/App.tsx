@@ -21,6 +21,8 @@ import AuthLayout from "./components/authLayout";
 import Loader from "./components/loader";
 import { WhichScreen } from "./components/layout";
 
+import { urls } from "./helpers/path";
+
 function App() {
   const [redirect, setRedirect] = useState(<></>);
 
@@ -30,25 +32,25 @@ function App() {
         <Router>
           <div className="App">
             {redirect}
-            <Route exact path="/">
+            <Route exact path={urls.home}>
               <h4>Home Page</h4>
-              <Link to="/app">Go to App</Link>
+              <Link to={urls.app}>Go to App</Link>
             </Route>
             <Route
               exact
-              path="/auth"
+              path={urls.auth}
               render={(props) => <AuthLayout {...props} />}
             />
             <Route
               exact
-              path="/app"
+              path={urls.app}
               render={(props) => (
                 <PrimaryLayout {...props} is={WhichScreen.DASHBOARD} />
               )}
             />
             <Route
               exact
-              path="/app/sim-setup"
+              path={urls.setup}
               render={(props) => (
                 <PrimaryLayout {...props} is={WhichScreen.SETUP} />
               )}

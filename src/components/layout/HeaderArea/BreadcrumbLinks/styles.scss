@@ -1,0 +1,14 @@
+.link-area {
+  display: flex;
+  align-items: center;
+
+  a {
+    padding: 0 0.2rem;
+  }
+}
+
+.breadcrumb-item {
+  &::after {
+    color: #ffffff;
+  }
+}
