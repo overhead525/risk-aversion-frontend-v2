@@ -1,0 +1,78 @@
+@keyframes slideIn {
+  0% {
+    transform: translateX(-10rem);
+  }
+
+  100% {
+    transform: translateX(0rem);
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.flow-wrapper {
+  display: grid;
+  place-items: center;
+  height: 600px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leader {
+  margin-bottom: 1.5rem;
+
+  animation: slideIn 1s, appear 1s;
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.71, 0.92);
+}
+
+.input {
+  &.needs-width {
+    width: 25rem;
+  }
+
+  &.flex {
+    display: flex;
+  }
+
+  &__icon {
+    padding-top: 0.5rem;
+    margin-left: -3.2rem;
+  }
+
+  animation-name: appear;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  animation-delay: 0.6s;
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.71, 0.92);
+}
+
+.pictogram {
+  margin-top: 4rem;
+  fill: black;
+  height: 10rem;
+  width: 10rem;
+
+  animation: appear 1.5s;
+  animation-timing-function: cubic-bezier(0.17, 0.67, 0.71, 0.92);
+}
+
+.naming {
+  background-image: url("./pictograms/construct.svg");
+}
+
+.set-principal {
+  background-image: url("./pictograms//global-currency.svg");
+}
