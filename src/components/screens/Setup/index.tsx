@@ -9,9 +9,17 @@ enum flows {
   "SET_PRINCIPAL",
 }
 
-const correspondence: { [key: number]: JSX.Element } = {
-  0: <Naming />,
-  1: <SetPrincipal />,
+const correspondence: {
+  [key: number]: { title: string; component: JSX.Element };
+} = {
+  0: {
+    title: "Name the simulation",
+    component: <Naming />,
+  },
+  1: {
+    title: "Set initial principal",
+    component: <SetPrincipal />,
+  },
 };
 
 interface SetupProps {}
@@ -20,10 +28,14 @@ const Setup: React.FC<SetupProps> = () => {
   const [flowStep, setFlowStep] = useState(flows.NAMING);
 
   const renderFlowStep = (targetFlowStep: number) => {
-    return correspondence[targetFlowStep];
+    return correspondence[targetFlowStep].component;
   };
 
-  return <div>{renderFlowStep(flowStep)}</div>;
+  return (
+    <div>
+      <div>{renderFlowStep(flowStep)}</div>
+    </div>
+  );
 };
 
 export default Setup;
