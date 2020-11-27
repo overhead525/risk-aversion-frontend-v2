@@ -22,7 +22,7 @@ const SetPrincipal: React.FC<SetPrincipalProps> = () => {
             id="simulation-principal"
             step={1000}
             helperText="Increments by $1000"
-            min={0}
+            min={1}
             invalidText="You need money to simulate"
             allowEmpty={false}
           />

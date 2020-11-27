@@ -14,7 +14,7 @@ interface ScreenAreaProps {
 
 export const ScreenArea: React.FC<ScreenAreaProps> = ({
   useResponsiveOffset = true,
-  is = "DASHBOARD",
+  is = WhichScreen.DASHBOARD,
 }) => {
   const content = (
     <div className="bx--grid">

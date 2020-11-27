@@ -14,6 +14,7 @@ const Naming: React.FC<NamingProps> = () => {
     placeholder: "Enter a name",
     labelText: "",
     id: "simulation-name",
+    invalidText: "Please enter a name for the simulation",
     hideLabel: true,
   };
 
