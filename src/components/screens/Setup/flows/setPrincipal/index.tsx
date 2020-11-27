@@ -1,14 +1,29 @@
 import React from "react";
-import { NumberInput, NumberInputProps } from "carbon-components-react";
-import { CurrencyDollar32 } from "@carbon/icons-react";
+import {
+  Button,
+  ButtonProps,
+  NumberInput,
+  NumberInputProps,
+} from "carbon-components-react";
+import { ArrowLeft32, CurrencyDollar32 } from "@carbon/icons-react";
+import { flows } from "../..";
 
-interface SetPrincipalProps {}
+interface SetPrincipalProps {
+  flowStepUpdateFn: React.Dispatch<any>;
+}
 
-const SetPrincipal: React.FC<SetPrincipalProps> = () => {
+const SetPrincipal: React.FC<SetPrincipalProps> = ({ flowStepUpdateFn }) => {
   const setPrincipalInputProps: NumberInputProps = {
     value: 1000,
     step: 1000,
     id: "simulation-principal",
+  };
+
+  const backButtonProps: ButtonProps = {
+    onClick: (e) => {
+      e.preventDefault();
+      flowStepUpdateFn(flows.NAMING);
+    },
   };
 
   return (
@@ -27,6 +42,14 @@ const SetPrincipal: React.FC<SetPrincipalProps> = () => {
             allowEmpty={false}
           />
         </div>
+        <Button
+          className="input next-button"
+          {...backButtonProps}
+          kind="tertiary"
+          renderIcon={ArrowLeft32}
+        >
+          Back
+        </Button>
         <div className="set-principal pictogram"></div>
       </div>
     </div>

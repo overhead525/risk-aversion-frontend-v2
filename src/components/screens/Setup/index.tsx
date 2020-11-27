@@ -1,31 +1,46 @@
 import React, { useState } from "react";
 import Naming from "./flows/naming";
 import SetPrincipal from "./flows/setPrincipal";
+import { ProgressIndicator, ProgressStep } from "carbon-components-react";
 
 import "./setup.styles.scss";
 
-enum flows {
+export enum flows {
   "NAMING",
   "SET_PRINCIPAL",
 }
-
-const correspondence: {
-  [key: number]: { title: string; component: JSX.Element };
-} = {
-  0: {
-    title: "Name the simulation",
-    component: <Naming />,
-  },
-  1: {
-    title: "Set initial principal",
-    component: <SetPrincipal />,
-  },
-};
 
 interface SetupProps {}
 
 const Setup: React.FC<SetupProps> = () => {
   const [flowStep, setFlowStep] = useState(flows.NAMING);
+
+  const correspondence: {
+    [key: number]: {
+      title: string;
+      description: string;
+      component: JSX.Element;
+    };
+  } = {
+    0: {
+      title: "Sim Name",
+      description: "Name the simulation",
+      component: <Naming flowStepUpdateFn={setFlowStep} />,
+    },
+    1: {
+      title: "Initial Principal",
+      description: "Set the initial principal",
+      component: <SetPrincipal flowStepUpdateFn={setFlowStep} />,
+    },
+  };
+
+  const renderProgressSteps = () => {
+    return Object.entries(correspondence)
+      .map((entry) => entry[1])
+      .map(({ title, description }) => {
+        return <ProgressStep label={title} description={description} />;
+      });
+  };
 
   const renderFlowStep = (targetFlowStep: number) => {
     return correspondence[targetFlowStep].component;
@@ -33,6 +48,9 @@ const Setup: React.FC<SetupProps> = () => {
 
   return (
     <div>
+      <ProgressIndicator currentIndex={flowStep}>
+        {renderProgressSteps()}
+      </ProgressIndicator>
       <div>{renderFlowStep(flowStep)}</div>
     </div>
   );

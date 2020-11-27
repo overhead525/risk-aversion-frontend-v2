@@ -7,9 +7,13 @@ import {
 } from "carbon-components-react";
 import { ArrowRight32 } from "@carbon/icons-react";
 
-interface NamingProps {}
+import { flows } from "../../index";
 
-const Naming: React.FC<NamingProps> = () => {
+interface NamingProps {
+  flowStepUpdateFn: React.Dispatch<any>;
+}
+
+const Naming: React.FC<NamingProps> = ({ flowStepUpdateFn }) => {
   const namingInputProps: TextInputProps = {
     placeholder: "Enter a name",
     labelText: "",
@@ -21,8 +25,7 @@ const Naming: React.FC<NamingProps> = () => {
   const nextButtonProps: ButtonProps = {
     onClick: (e) => {
       e.preventDefault();
-      // update flowData state
-      // redirect user to next flow by changing flowStep state
+      flowStepUpdateFn(flows.SET_PRINCIPAL);
     },
   };
 
