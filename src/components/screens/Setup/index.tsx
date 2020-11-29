@@ -18,7 +18,7 @@ export enum flows {
 interface SetupProps {}
 
 const Setup: React.FC<SetupProps> = () => {
-  const [flowStep, setFlowStep] = useState(flows.SET_PRINCIPAL);
+  const [flowStep, setFlowStep] = useState(flows.NAMING);
 
   const dispatch = useDispatch();
 
