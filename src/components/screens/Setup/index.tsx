@@ -4,7 +4,7 @@ import Naming from "./flows/naming";
 import SetPrincipal from "./flows/setPrincipal";
 import { ProgressIndicator, ProgressStep } from "carbon-components-react";
 import {
-  selectFormProperty,
+  selectForm,
   updateSetupForm,
 } from "../../../features/setupForm/setupFormSlice";
 
