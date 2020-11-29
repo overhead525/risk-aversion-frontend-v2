@@ -48,6 +48,7 @@ const Naming: React.FC<NamingProps> = ({
     onClick: (e) => {
       e.preventDefault();
       setupFormUpdateFn({ simName: simName });
+      if (!(simName.length > 0)) return setValidStatus(false);
       flowStepUpdateFn(flows.SET_PRINCIPAL);
     },
   };
