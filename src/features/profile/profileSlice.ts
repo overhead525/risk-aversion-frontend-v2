@@ -43,22 +43,7 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     setProfile: (state, action: PayloadAction<SetProfileActionPayload>) => {
-      if (action.payload.firstName) state.firstName = action.payload.firstName;
-      if (action.payload.lastName) state.lastName = action.payload.lastName;
-      if (action.payload.tradingHabits) {
-        if (action.payload.tradingHabits.risk)
-          state.tradingHabits.risk = action.payload.tradingHabits.risk;
-        if (action.payload.tradingHabits.reward)
-          state.tradingHabits.reward = action.payload.tradingHabits.reward;
-        if (action.payload.tradingHabits.lossPercentage)
-          state.tradingHabits.lossPercentage =
-            action.payload.tradingHabits.lossPercentage;
-        if (action.payload.tradingHabits.winPercentage)
-          state.tradingHabits.winPercentage =
-            action.payload.tradingHabits.winPercentage;
-      }
-      if (action.payload.goalPortfolio)
-        state.goalPortfolio = action.payload.goalPortfolio;
+      Object.assign(state, action.payload);
     },
   },
 });

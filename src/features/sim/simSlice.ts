@@ -70,36 +70,7 @@ export const simSlice = createSlice({
       state,
       action: PayloadAction<setSimulationActionPayload>
     ) => {
-      if (action.payload.executed) {
-        // Update executed status
-        state.executed = action.payload.executed;
-      }
-      if (action.payload.simName) {
-        // Update simName
-        state.simName = action.payload.simName;
-      }
-      if (action.payload.config) {
-        // Update individual properties if you like
-        state.config = {
-          ...state.config,
-          ...action.payload.config,
-        };
-      }
-      if (action.payload.simResult) {
-        // Update individual properties if you like
-        state.simResult = {
-          ...state.simResult,
-          ...action.payload.simResult,
-        };
-      }
-      if (action.payload.configurations) {
-        // Update configurations array
-        state.configurations = action.payload.configurations;
-      }
-      if (action.payload.simulations) {
-        // Update simulations array
-        state.simulations = action.payload.simulations;
-      }
+      Object.assign(state, action.payload);
     },
     resetStateProp: (
       state,
