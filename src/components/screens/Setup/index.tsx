@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Naming from "./flows/naming";
 import SetPrincipal from "./flows/setPrincipal";
 import { ProgressIndicator, ProgressStep } from "carbon-components-react";
+import {
+  selectFormProperty,
+  updateSetupForm,
+} from "../../../features/setupForm/setupFormSlice";
 
 import "./setup.styles.scss";
 
@@ -15,6 +20,12 @@ interface SetupProps {}
 const Setup: React.FC<SetupProps> = () => {
   const [flowStep, setFlowStep] = useState(flows.NAMING);
 
+  const dispatch = useDispatch();
+
+  const handleFormUpdate = (obj: { [key: string]: string | number }) => {
+    dispatch(updateSetupForm(obj));
+  };
+
   const correspondence: {
     [key: number]: {
       title: string;
@@ -25,12 +36,22 @@ const Setup: React.FC<SetupProps> = () => {
     0: {
       title: "Sim Name",
       description: "Name the simulation",
-      component: <Naming flowStepUpdateFn={setFlowStep} />,
+      component: (
+        <Naming
+          flowStepUpdateFn={setFlowStep}
+          setupFormUpdateFn={handleFormUpdate}
+        />
+      ),
     },
     1: {
       title: "Initial Principal",
       description: "Set the initial principal",
-      component: <SetPrincipal flowStepUpdateFn={setFlowStep} />,
+      component: (
+        <SetPrincipal
+          flowStepUpdateFn={setFlowStep}
+          setupFormUpdateFn={handleFormUpdate}
+        />
+      ),
     },
   };
 

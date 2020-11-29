@@ -10,6 +10,7 @@ import { flows } from "../..";
 
 interface SetPrincipalProps {
   flowStepUpdateFn: React.Dispatch<any>;
+  setupFormUpdateFn: (obj: { [key: string]: string | number }) => void;
 }
 
 const SetPrincipal: React.FC<SetPrincipalProps> = ({ flowStepUpdateFn }) => {
