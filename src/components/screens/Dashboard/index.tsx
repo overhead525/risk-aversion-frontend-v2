@@ -33,7 +33,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   useEffect(() => {
     getUserProfileWrapper();
     getUserConfigurationsWrapper();
-  }, []);
+  });
 
   return (
     <div className="bx--grid">
