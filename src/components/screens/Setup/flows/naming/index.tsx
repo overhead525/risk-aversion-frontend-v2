@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createRef, RefObject, useEffect, useState } from "react";
 import {
   TextInput,
   TextInputProps,
@@ -44,13 +44,11 @@ const Naming: React.FC<NamingProps> = ({
     invalid: true,
   };
 
-  const nextButtonProps: ButtonProps = {
-    onClick: (e) => {
-      e.preventDefault();
-      setupFormUpdateFn({ simName: simName });
-      if (!(simName.length > 0)) return setValidStatus(false);
-      flowStepUpdateFn(flows.SET_PRINCIPAL);
-    },
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setupFormUpdateFn({ simName: simName });
+    if (!(simName.length > 0)) return setValidStatus(false);
+    flowStepUpdateFn(flows.SET_PRINCIPAL);
   };
 
   const handleValidationAssignment = () => {
@@ -61,17 +59,22 @@ const Naming: React.FC<NamingProps> = ({
     <div className="flow-wrapper">
       <div className="content">
         <h1 className="leader">What should we call this simulation?</h1>
-        <div className="input needs-width">
-          <TextInput {...handleValidationAssignment()}></TextInput>
-        </div>
-        <Button
-          className="input next-button"
-          {...nextButtonProps}
-          kind="secondary"
-          renderIcon={ArrowRight32}
-        >
-          Next
-        </Button>
+        <form onSubmit={handleOnSubmit}>
+          <div className="input needs-width">
+            <TextInput {...handleValidationAssignment()}></TextInput>
+          </div>
+          <div className="submit">
+            <Button
+              id="next-button"
+              className="input next-button"
+              type="submit"
+              kind="secondary"
+              renderIcon={ArrowRight32}
+            >
+              Next
+            </Button>
+          </div>
+        </form>
         <div className="naming pictogram"> </div>
       </div>
     </div>

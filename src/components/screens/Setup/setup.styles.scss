@@ -59,6 +59,11 @@
   animation-timing-function: cubic-bezier(0.17, 0.67, 0.71, 0.92);
 }
 
+.submit {
+  display: grid;
+  place-items: center;
+}
+
 .pictogram {
   margin-top: 4rem;
   fill: black;
