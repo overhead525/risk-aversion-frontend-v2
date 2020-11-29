@@ -49,21 +49,6 @@ export const setupFormSlice = createSlice({
 
 export const { updateSetupForm } = setupFormSlice.actions;
 
-export const getFormProperty = (state: RootState, formProp: string) => {
-  const propArray = Object.entries(state.setupForm).filter((pair) => {
-    return pair[0] === formProp ? pair[1] : null;
-  });
-  const onEmpty = (arr: any[]) => {
-    if (arr.length > 0) {
-      throw new Error(
-        `There seems to be more than one property with the name ${formProp}. This should be taken care of immediately`
-      );
-    } else if (arr.length === 0) {
-      console.error(`The state object had no property with name ${formProp}`);
-    }
-    return null;
-  };
-  return propArray.length === 1 ? propArray[0] : onEmpty(propArray);
-};
+export const selectForm = (state: RootState) => state.setupForm;
 
 export default setupFormSlice.reducer;
