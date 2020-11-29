@@ -9,10 +9,12 @@ import {
 } from "../../../features/setupForm/setupFormSlice";
 
 import "./setup.styles.scss";
+import RiskReward from "./flows/riskReward";
 
 export enum flows {
   "NAMING",
   "SET_PRINCIPAL",
+  "RISK_REWARD",
 }
 
 interface SetupProps {}
@@ -48,6 +50,16 @@ const Setup: React.FC<SetupProps> = () => {
       description: "Set the initial principal",
       component: (
         <SetPrincipal
+          flowStepUpdateFn={setFlowStep}
+          setupFormUpdateFn={handleFormUpdate}
+        />
+      ),
+    },
+    2: {
+      title: "Risk Reward Ratio",
+      description: "Determine your comfort level",
+      component: (
+        <RiskReward
           flowStepUpdateFn={setFlowStep}
           setupFormUpdateFn={handleFormUpdate}
         />

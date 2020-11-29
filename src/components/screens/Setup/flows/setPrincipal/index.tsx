@@ -48,6 +48,7 @@ const SetPrincipal: React.FC<SetPrincipalProps> = ({
 
   const handleFormSubmit = () => {
     setupFormUpdateFn({ principal: principal });
+    flowStepUpdateFn(flows.RISK_REWARD);
   };
 
   return (
