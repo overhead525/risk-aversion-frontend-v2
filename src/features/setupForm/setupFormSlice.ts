@@ -25,7 +25,7 @@ export const initialState: SetupFormState = {
   numOfSimulations: null,
 };
 
-export interface SetFormAction {
+export interface SetFormActionPayload {
   simName?: string;
   principal?: number;
   riskDecimal?: number;
@@ -41,7 +41,7 @@ export const setupFormSlice = createSlice({
   name: "setupForm",
   initialState,
   reducers: {
-    updateSetupForm: (state, action: PayloadAction<SetFormAction>) => {
+    updateSetupForm: (state, action: PayloadAction<SetFormActionPayload>) => {
       state = {
         ...state,
         ...action.payload,
