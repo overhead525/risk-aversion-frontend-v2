@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectEntireProfile } from "../../../../features/profile/profileSlice";
 import { convertRawProfile, composeRadarData, marketProfile } from "./helpers";
