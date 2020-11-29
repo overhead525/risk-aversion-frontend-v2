@@ -11,6 +11,7 @@ import localForage from "localforage";
 import authReducer from "../features/auth/authSlice";
 import simReducer from "../features/sim/simSlice";
 import profileReducer from "../features/profile/profileSlice";
+import setupFormReducer from "../features/setupForm/setupFormSlice";
 
 const authPersistConfig = {
   key: "authRoot",
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   sim: persistReducer(simPersistConfig, simReducer),
   profile: persistReducer(profilePersistConfig, profileReducer),
+  setupForm: setupFormReducer,
 });
 
 export const store = configureStore({
