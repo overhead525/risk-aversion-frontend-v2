@@ -28,6 +28,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .c-mui-root {
+    max-width: 34.5rem;
+  }
+
+  .c-mui-media {
+    height: 14rem;
+  }
+
+  .action-area-balancer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .constructed-sentence {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .leader {
@@ -64,6 +84,15 @@
   place-items: center;
 }
 
+.choice-cards {
+  width: 70%;
+
+  display: flex;
+  justify-content: space-around;
+
+  margin-bottom: 2rem;
+}
+
 .pictogram {
   margin-top: 4rem;
   fill: black;
@@ -80,6 +109,14 @@
 
 .set-principal {
   background-image: url("./pictograms//global-currency.svg");
+}
+
+.justice-balance {
+  background-image: url("./pictograms/justice.svg");
+}
+
+.trust {
+  background-image: url("./pictograms/trust.svg");
 }
 
 .next-button {

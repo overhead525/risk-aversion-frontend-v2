@@ -20,7 +20,7 @@ export enum flows {
 interface SetupProps {}
 
 const Setup: React.FC<SetupProps> = () => {
-  const [flowStep, setFlowStep] = useState(flows.NAMING);
+  const [flowStep, setFlowStep] = useState(flows.RISK_REWARD);
 
   const dispatch = useDispatch();
 
@@ -78,8 +78,6 @@ const Setup: React.FC<SetupProps> = () => {
   const renderFlowStep = (targetFlowStep: number) => {
     return correspondence[targetFlowStep].component;
   };
-
-  console.log(useSelector(selectForm));
 
   return (
     <div>
