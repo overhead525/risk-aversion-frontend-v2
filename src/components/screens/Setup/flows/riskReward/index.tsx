@@ -25,7 +25,7 @@ interface RiskRewardProps {
 }
 
 const RiskReward: React.FC<RiskRewardProps> = ({ flowStepUpdateFn }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   const flowBackButtonProps: ButtonProps = {
     onClick: (e) => {
